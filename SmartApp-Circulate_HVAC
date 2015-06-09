@@ -41,7 +41,7 @@ preferences {
 			input "sensor", "capability.temperatureMeasurement", title: "Temperature Sensor used to establish minimum run temperature"
 		}
 		section("Operation") {
-			input "runTemp", "number", title:"Choose a temperature to set the minimum run temperature.  0 is all the time.", defaultValue:70
+			input "runTemp", "number", title:"Choose a temperature to set the minimum run temperature.", defaultValue:70
 			input "onoff", "capability.switch", title:"Select switch to control operation.  Typically a virtual switch created in the IDE" 
         }
 }
@@ -90,11 +90,12 @@ def scheduler(){
 def start_circulate(){
 	DEBUG("start_circulate()")
 	if (onoff.currentSwitch == "on")
-    	DEBUG("on is true")
-		if (sensor.currentValue("temperature") >= runtemp || runtemp == 0)
+    	{	DEBUG("on is true")
+		if (sensor.currentValue("temperature") >= runtemp)
    		{	DEBUG ("into start_circulate() if statement")
 			thermostat.fanOn()
     	}
+    }
 }
 
 def initialize() {
@@ -120,5 +121,5 @@ def eventHandler(evt){
 }
 
 private def DEBUG(message){
-//	log.debug message
+	//log.debug message
 }
