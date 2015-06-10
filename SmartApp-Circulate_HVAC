@@ -111,7 +111,7 @@ def eventHandler(evt){
 		scheduler()
 	}
 	if(evt.value == "heating"|| evt.value == "cooling"){
-		LOG("idle - running unschedule()")
+		LOG("not idle - running unschedule()")
     	unschedule()
    }
 }
