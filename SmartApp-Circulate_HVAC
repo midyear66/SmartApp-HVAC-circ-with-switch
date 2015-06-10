@@ -48,38 +48,33 @@ preferences {
 
 def installed() {
 	DEBUG("Installed with settings: ${settings}")
-	initialize()
-    subscribe(onoff, "switch.on", onHandler)
-    subscribe(onoff, "switch.off", offHandler)
+    initialize()
 }
 
 def updated() {
 	DEBUG("Updated with settings: ${settings}")
 	unsubscribe()
 	unschedule()
-    subscribe(onoff, "switch.on", onHandler)
-    subscribe(onoff, "switch.off", offHandler)
-	initialize()
-    def tmpswitch = onoff.currentSwitch
-    DEBUG("Switch: ${tmpswitch}")
-    def tmptemp = sensor.currentValue("temperature")
-    DEBUG("temperature: ${tmptemp}")
+   	initialize()
+
 }
 
 def onHandler(evt) {
-	log.debug evt.value
-	log.info("Running Switch On Event")
+	DEBUG(evt.value)
+	LOG("Running Switch On Event")
+    scheduler()
 }
 
 def offHandler(evt) {
-	log.debug evt.value
-	log.info("Running Switch Off Event")
+	DEBUG(evt.value)
+	LOG("Running Switch Off Event")
+    unschedule()
     thermostat.fanAuto()
 }
 
 def scheduler(){
 	DEBUG ("scheduler()")
-    	thermostat.fanAuto()
+    thermostat.fanAuto()
 	def interval = settings.interval.toInteger() * 60
 	def length = settings.length.toInteger() * 60
 	DEBUG("Interval in seconds: ${interval}, Length in seconds: ${length}")
@@ -89,21 +84,20 @@ def scheduler(){
         
 def start_circulate(){
 	DEBUG("start_circulate()")
-	if (onoff.currentSwitch == "on")
-    	{	DEBUG("on is true")
-		if (sensor.currentValue("temperature") >= runtemp)
-   		{	DEBUG ("into start_circulate() if statement")
-			thermostat.fanOn()
-    	}
-    }
+	if (sensor.currentValue("temperature") >= runtemp)
+	{	DEBUG ("into start_circulate() if statement")
+		thermostat.fanOn()
+   	}
 }
 
 def initialize() {
 	DEBUG("initialize()")
-    	subscribe(device, "thermostatOperatingState", eventHandler)
-	def running_state = thermostat.currentValue("thermostatOperatingState")
-    	DEBUG ("running_state: ${running_state}")
-	if(thermostat.currentValue("thermostatOperatingState") == "idle"){
+    subscribe(onoff, "switch.on", onHandler)
+    subscribe(onoff, "switch.off", offHandler)
+    subscribe(device, "thermostatOperatingState", eventHandler)
+    DEBUG ("running_state: ${thermostat.currentValue("thermostatOperatingState")}")
+    DEBUG ("On/Off Switch: ${onoff.currentswitch}")
+	if(thermostat.currentValue("thermostatOperatingState") == "idle" && onoff.currentSwitch == "on"){
 		scheduler()
     }
 }
@@ -113,11 +107,17 @@ def initialize() {
 def eventHandler(evt){
 	DEBUG("eventHandler: ${evt.value}: ${evt}, ${settings}")
 	if(evt.value == "idle"){
+    	LOG("idle - running scheduler()")
 		scheduler()
 	}
 	if(evt.value == "heating"|| evt.value == "cooling"){
-		unschedule()
+		LOG("idle - running unschedule()")
+    	unschedule()
    }
+}
+
+private def LOG(message){
+	log.info message
 }
 
 private def DEBUG(message){
