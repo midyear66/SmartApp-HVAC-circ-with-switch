@@ -1,5 +1,5 @@
-# SmartApp-HVAC-circulate-BETA
-Test app of the HVAC that has temperature min and interface ti a virtual tile.
+# SmartApp-HVAC-circulate-with-switch
+Varication of the HVAC circulate that has temperature min and interface with a virtual tile.
 
 In order to use this version, a virtual device must be created through the IDE.  I recommend the 'smartthings : On/Off Button Tile'.  Or the virtual button above.  It has the icon and the label changed.
 You can create it by going to My Devices and click create new device.  Fill in the blanks and choose 'On/Off Button Tile' in the device type.
