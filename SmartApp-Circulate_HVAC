@@ -112,7 +112,8 @@ def eventHandler(evt){
 	}
 	if(evt.value == "heating"|| evt.value == "cooling"){
 		LOG("not idle - running unschedule()")
-    	unschedule()
+    		unschedule()
+    		thermostat.fanAuto()
    }
 }
 
