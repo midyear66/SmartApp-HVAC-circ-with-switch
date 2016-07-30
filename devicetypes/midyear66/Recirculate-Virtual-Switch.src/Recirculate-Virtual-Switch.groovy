@@ -4,7 +4,7 @@
  */
 metadata {
 	// Automatically generated. Make future change here.
-	definition (name: "Recirculate_Virtual_Switch", namespace: "midyear66", author: "bsanford") {
+	definition (name: "Recirculate-Virtual-Switch", namespace: "midyear66", author: "bsanford") {
 		capability "Switch"
 	}
 
