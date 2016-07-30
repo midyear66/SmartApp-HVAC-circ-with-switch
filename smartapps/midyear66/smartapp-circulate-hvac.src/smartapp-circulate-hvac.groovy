@@ -14,7 +14,7 @@
  *
  */
 definition(
-    name: "smartapp_circulate_hvac",
+    name: "smartapp-circulate-hvac",
     namespace: "midyear66",
     author: "Bob Sanford",
     description: "Run circulate every X minutes if AC or heat has not been on",
