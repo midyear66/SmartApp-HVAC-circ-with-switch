@@ -14,7 +14,7 @@
  *
  */
 definition(
-    name: "SmartApp_Circulate_HVAC",
+    name: "Run circulate in HVAC - with virtual tile",
     namespace: "midyear66",
     author: "Bob Sanford",
     description: "Run circulate every X minutes if AC or heat has not been on",
