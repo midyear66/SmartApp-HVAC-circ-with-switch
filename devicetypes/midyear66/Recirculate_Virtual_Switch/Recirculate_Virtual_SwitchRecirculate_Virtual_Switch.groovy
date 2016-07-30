@@ -4,7 +4,7 @@
  */
 metadata {
 	// Automatically generated. Make future change here.
-	definition (name: "Recirculate_Virtual_Switch", namespace: "midyear66", author: "bsanford") {
+	definition (name: "M66 - Recirc Button Tile", namespace: "midyear66", author: "bsanford") {
 		capability "Switch"
 	}
 
